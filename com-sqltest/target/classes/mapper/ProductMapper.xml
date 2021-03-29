@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sqltest.mapper.ProductMapper">
+    <select id="findColumns" resultType="string">
+      SELECT
+       <if test="column == 'vend_id'">
+        DISTINCT
+       </if>
+       ${column} From `products`
+    </select>
+
+    <select id="findProductByLimit" resultType="com.sqltest.entity.Product" parameterType="map">
+        select * from `products` limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="selectProductFetchVendor" resultMap="ProductResultMap">
+          select  *
+				from products p
+				join vendors v on v.vend_id=p.vend_id
+				where p.prod_id=#{prodId}
+    </select>
+    <!--<select id="selectProductFetchVendor" resultMap="ProductResultMap">-->
+          <!--select  *-->
+				<!--from products-->
+    <!--</select>-->
+
+    <resultMap id="ProductResultMap" type="com.sqltest.entity.Product" autoMapping="true">
+        <id column="prod_id" property="prodId"/>
+        <association property="vendor" column="vend_id" javaType="com.sqltest.entity.Vendor" autoMapping="true">
+        </association>
+    </resultMap>
+        <select id="getVendor" resultType="com.sqltest.entity.Vendor">
+            select * from vendors where vend_id = #{vendId}
+        </select>
+
+</mapper>
