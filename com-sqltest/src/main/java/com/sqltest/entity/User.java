@@ -8,5 +8,5 @@ package com.sqltest.entity;
  * @Version 1.0
  **/
 public class User {
-
+    private String name;
 }
