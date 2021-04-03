@@ -27,7 +27,7 @@ build
 # Log file
 *.log
 log/
-
+*/log/
 # out
 **/out/
 
